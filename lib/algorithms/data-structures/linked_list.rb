@@ -20,7 +20,6 @@ class LinkedList
   end
 
   def get(index)
-
     counter = 0
     node = @head
 
