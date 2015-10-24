@@ -8,29 +8,28 @@ class LinkedList
     @size = 0
   end
 
+  #TODO it's dangerous to allow user to stuff `node` in, coz it makes it vulnerable
   def push_back(node)
 
-    if @head.nil?
-      @head = node
-      @tail = node
-    else
+    if @tail
       @tail.next = node
       @tail = node
+    else
+      @head = @tail = node
     end
-    @size = @size + 1
+    @size += 1
 
   end
 
   def push_front(node)
 
-    if @head.nil?
-      @head = node
-      @tail = node
-    else
+    if @head
       node.next = @head
       @head = node
+    else
+      @head = @tail = node
     end
-    @size = @size + 1
+    @size += 1
 
   end
 
