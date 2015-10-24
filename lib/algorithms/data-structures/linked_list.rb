@@ -1,6 +1,6 @@
 class LinkedList
 
-  attr_accessor :head, :tail, :size
+  attr_accessor :head, :tail
 
   def initialize
     @head = nil
@@ -8,8 +8,8 @@ class LinkedList
     @size = 0
   end
 
-  def add(node)
-    @size = @size + 1
+  def push_back(node)
+
     if @head.nil?
       @head = node
       @tail = node
@@ -17,9 +17,42 @@ class LinkedList
       @tail.next = node
       @tail = node
     end
+    @size = @size + 1
+
+  end
+
+  def push_front(node)
+
+    if @head.nil?
+      @head = node
+      @tail = node
+    else
+      node.next = @head
+      @head = node
+    end
+    @size = @size + 1
+
+  end
+
+  def push_at(index, node)
+
+    case index
+      when 0 then push_front(node)
+      when @size - 1 then push_back(node)
+      else
+        prevNode = get (index - 1)
+
+        node.next = prevNode.next
+        prevNode.next = node
+        @size = @size + 1
+    end
+
   end
 
   def get(index)
+
+    fail ArgumentError, 'index not available' if invalid_index?(index)
+
     counter = 0
     node = @head
 
@@ -32,19 +65,23 @@ class LinkedList
   end
 
   def invalid_index?(index)
-    index < 0 || index > @size
+    @size == 0 || index < 0 || index > @size
   end
 
-  # def delete(index = @size-1)
-  #
-  #   node = nil
-  #   unless invalid_index?(index)
-  #     node =
-  #   end
-  #   node
-  # end
 
-  def is_empty
-    @size.eql?(0)
+  # Return the number of items in the List.
+  def size
+    @size
+  end
+  alias_method :length, :size
+
+  def empty?
+    @size == 0
+  end
+
+  def clear
+    @head = nil
+    @tail = nil
+    @size = 0
   end
 end
